@@ -15,7 +15,7 @@ def insert_conf(machine,presure,grit,cycle_duration, operator):
         if resultado:
             nuevo_id = resultado[0]
         conn.commit()
-        print(f"Conf added successfully.-------------------------------------------------{nuevo_id}")
+        print(f"Conf added successfully.-{nuevo_id}")
     except Exception as ex:
         print(" Error inserting Conf:", ex)
     finally:
