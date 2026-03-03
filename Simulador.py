@@ -21,20 +21,22 @@ def main():
     conf = conf_machine()
     for order in list_orders:
         Add_cycles(order,conf['idSeq'])
-        capi.FinishOrder(order['idSeq'])
 
 
      
 #add cycles 
 def Add_cycles(order,conf):
     total_piezas = order['quantity'] 
+    piezas_terminadas = 0
     piezas_por_ciclo = 4
     ciclos_totales = total_piezas // piezas_por_ciclo
 
     for i in range(ciclos_totales):
         piezas_por_ciclol = [4, 3]
         is_finished = random.choices(piezas_por_ciclol, weights=pesos4, k=1)[0]
+        piezas_terminadas = is_finished+piezas_terminadas
         capi.PostCycles(is_finished, piezas_por_ciclo, conf,order['idSeq'])
+    capi.FinishOrder(order['idSeq'],piezas_terminadas)
 
 def conf_machine():
     machinel = []

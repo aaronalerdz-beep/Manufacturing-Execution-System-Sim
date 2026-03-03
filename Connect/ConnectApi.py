@@ -1,6 +1,7 @@
 import requests
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
@@ -71,25 +72,27 @@ def PostCycles(finished, piezas_por_ciclo, conf,order):
         if response.status_code == 201:
             return response.json()
         else:
-            print(f"Error al crear config: {response.text}")
+            print(f"Error al crear config: {response.text} Cycle")
             return None
     except Exception as e:
-        print(f"Error de conexión: {e}")
+        print(f"Error de conexión: {e} Cycle")
         return None
     
-def FinishOrder(id):
+def FinishOrder(id,piezas_terminadas):
     url = f"{baseUrl}/order/{id}/status"
     payload = {
-        "status": "Finished"
+        "status": "Finished",
+        "final_quantity": int(piezas_terminadas)
     }
+    print(payload)
     try:
         response = requests.put(url, json=payload)
         if response.status_code == 200:
             print(f"Order {id} is Finished")
             return response.json()
         else:
-            print(f"Error al crear config: {response.text}")
+            print(f"Error al crear config: {response.text} F_Order")
             return None
     except Exception as e:
-        print(f"Error de conexión: {e}")
+        print(f"Error de conexión: {e} F_Order")
         return None
