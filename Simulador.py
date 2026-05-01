@@ -5,6 +5,7 @@ import time
 from datetime import datetime as dt
 from Other import validations as val
 from Connect import ConnectApi as capi
+from Connect import ConnectMServ as capims
 from Model import CyclesModel as CYModel
 
 partnuml = []
@@ -20,7 +21,7 @@ def main():
     print(list_orders)
     conf = conf_machine()
     for order in list_orders:
-        Add_cycles(order,conf['idSeq'])
+        Add_cycles(order,conf['id'])
 
 
      
@@ -35,7 +36,7 @@ def Add_cycles(order,conf):
         piezas_por_ciclol = [4, 3]
         is_finished = random.choices(piezas_por_ciclol, weights=pesos4, k=1)[0]
         piezas_terminadas = is_finished+piezas_terminadas
-        capi.PostCycles(is_finished, piezas_por_ciclo, conf,order['idSeq'])
+        capims.PostCycles(is_finished, piezas_por_ciclo, conf,order['idSeq'])
     capi.FinishOrder(order['idSeq'],piezas_terminadas)
 
 def conf_machine():
@@ -53,7 +54,7 @@ def conf_machine():
     addvar = [id_machine,pressure,grit,cycle_duration,operator]
     var_val = val.validation(addvar)
     if var_val is True:    
-        idconf = capi.PostConfigMachine(id_machine,pressure,grit,cycle_duration,operator)
+        idconf = capims.PostConfigMachine(id_machine,pressure,grit,cycle_duration,operator)
         print(f"Este es el valor de idcong{idconf}")
         addvar = [idconf,id_machine,pressure,grit,cycle_duration,operator]
         print("Agregado")  
