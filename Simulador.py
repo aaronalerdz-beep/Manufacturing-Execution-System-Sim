@@ -7,7 +7,10 @@ from Other import validations as val
 from Connect import ConnectApi as capi
 from Connect import ConnectMServ as capims
 from Model import CyclesModel as CYModel
+import urllib3
 
+# Desactivar los warnings de peticiones HTTPS no verificadas
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 partnuml = []
 ordersl = []
 pesos = [90, 10]
@@ -20,8 +23,11 @@ def main():
     list_orders = capi.GetCreatedOrders()
     print(list_orders)
     conf = conf_machine()
-    for order in list_orders:
-        Add_cycles(order,conf['id'])
+    if conf and 'id' in conf:
+        print("Esperando a que el bus de eventos sincronice la configuración...")
+        time.sleep(2)
+        for order in list_orders:
+            Add_cycles(order,conf['id'])
 
 
      
