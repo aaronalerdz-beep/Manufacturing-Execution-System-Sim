@@ -7,6 +7,7 @@ from Other import validations as val
 from Connect import ConnectApi as capi
 from Connect import ConnectMServ as capims
 from Model import CyclesModel as CYModel
+from AIYolo import ComputerVision as CVision
 import urllib3
 
 # Desactivar los warnings de peticiones HTTPS no verificadas
@@ -35,12 +36,11 @@ def main():
 def Add_cycles(order,conf):
     total_piezas = order['quantity'] 
     piezas_terminadas = 0
-    piezas_por_ciclo = 4
+    piezas_por_ciclo = 1
     ciclos_totales = total_piezas // piezas_por_ciclo
 
     for i in range(ciclos_totales):
-        piezas_por_ciclol = [4, 3]
-        is_finished = random.choices(piezas_por_ciclol, weights=pesos4, k=1)[0]
+        is_finished = CVision.ImageAnalysis()
         piezas_terminadas = is_finished+piezas_terminadas
         capims.PostCycles(is_finished, piezas_por_ciclo, conf,order['idSeq'])
     capi.FinishOrder(order['idSeq'],piezas_terminadas)

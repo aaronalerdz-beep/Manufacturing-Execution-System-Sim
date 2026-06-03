@@ -519,3 +519,14 @@ env/
 # Python caché
 __pycache__/
 *.py[cod]
+
+*.yolov8
+*.zip
+*.pt
+*.pkl
+**/data/
+**/.data/
+**/yolov8n/
+**/datasets/
+**/Casting-Defects-*/
+*.yaml
